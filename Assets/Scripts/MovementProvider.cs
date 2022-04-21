@@ -7,8 +7,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class MovementProvider : LocomotionProvider
 {
-    public float speed = 1.0f;
-    public float gravityMultiplier = 1.0f;
+    public float speed = 7.0f;
+    public float gravityMultiplier = 9.6f;
     public List<XRController> controllers = null;
     private CharacterController characterController = null; 
     private GameObject head =null; 
@@ -23,13 +23,16 @@ public class MovementProvider : LocomotionProvider
     private void Start()
     {
         PositionController();
-        CheckForInput();
+        //CheckForInput();
         ApplyGravity();
     }
 
     private void Update()
     {
+        CheckForMovement();    
         PositionController();
+        ApplyGravity();
+
     }
 
     private void PositionController()
@@ -56,15 +59,19 @@ public class MovementProvider : LocomotionProvider
     {
         foreach(XRController controller in controllers)
         {
-            if(controller.enableInputActions)
-            CheckForMovement(controller.inputDevice);
+          //  if(controller.enableInputActions)
+           // CheckForMovement(controller.inputDevice);
         }
     }
 
-    private void CheckForMovement(InputDevice device)
+    private void CheckForMovement()
     {
-        if(device.TryGetFeatureValue(CommonUsages.primary2DAxis,out Vector2 position))
+       // Debug.Log(device);
+        if(controllers[0].inputDevice.TryGetFeatureValue(CommonUsages.primary2DAxis,out Vector2 position)){
+           // Debug.Log(position);
           StartMove(position); 
+        }
+
     }
 
     private void StartMove(Vector2 position)

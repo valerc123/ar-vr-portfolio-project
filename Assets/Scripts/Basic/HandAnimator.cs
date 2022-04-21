@@ -23,6 +23,7 @@ public class HandAnimator : MonoBehaviour
         new Finger(FingerType.Index),
         new Finger(FingerType.Thumb)
     };
+
      
     private void Awake()
     {
@@ -46,13 +47,15 @@ public class HandAnimator : MonoBehaviour
 
     private void CheckGrip()
     {
-        if(controller.inputDevice.TryGetFeatureValue(CommonUsages.grip, out float gripValue))
+        if(controller.inputDevice.TryGetFeatureValue(CommonUsages.grip, out float gripValue)){
             SetFingerTargets(gripfingers, gripValue);
+           // Debug.Log(gripValue);
+        }
     }
 
     private void CheckPointer()
     {
-        if(controller.inputDevice.TryGetFeatureValue(CommonUsages.grip, out float pointerValue))
+        if(controller.inputDevice.TryGetFeatureValue(CommonUsages.trigger, out float pointerValue))
             SetFingerTargets(pointfingers, pointerValue);
     }
 
